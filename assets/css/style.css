@@ -14,6 +14,7 @@
   --text-muted: #94a3b8;
 }
 
+/* Fix Syntax Error: Ubah (-) menjadi (*) */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -30,6 +31,7 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Custom Scrollbar */
@@ -50,30 +52,34 @@ body {
 
 /* Header Navbar */
 .app-header {
-  text-align: center;
-  padding: 28px 20px 20px;
-  background: rgba(11, 15, 25, 0.8);
+  padding: 20px;
+  background: rgba(11, 15, 25, 0.85);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-color);
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+}
+
+.app-logo {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.4));
+  flex-shrink: 0;
 }
 
 .app-header h1 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 700;
   background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
 }
 
 .app-header p {
   color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-top: 4px;
+  font-size: 0.88rem;
+  margin-top: 2px;
 }
 
 /* Layout Grid */
@@ -83,13 +89,7 @@ body {
   gap: 24px;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 24px 40px;
-}
-
-@media (max-width: 1024px) {
-  .app-container {
-    grid-template-columns: 1fr;
-  }
+  padding: 0 20px 40px;
 }
 
 /* Glassmorphism Cards */
@@ -183,6 +183,7 @@ textarea.form-control {
   justify-content: space-between;
   padding: 8px 0;
   border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+  gap: 12px;
 }
 
 .toggle-group:last-child {
@@ -205,6 +206,7 @@ textarea.form-control {
   cursor: pointer;
   outline: none;
   transition: background 0.2s;
+  flex-shrink: 0;
 }
 
 .toggle-switch:checked {
@@ -267,6 +269,7 @@ textarea.form-control {
   padding-bottom: 16px;
   margin-bottom: 16px;
   border-bottom: 1px solid var(--border-color);
+  gap: 12px;
 }
 
 .window-dots {
@@ -323,8 +326,10 @@ textarea.form-control {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .btn-primary {
@@ -354,9 +359,18 @@ textarea.form-control {
   background: #0d1117;
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 28px;
-  min-height: 520px;
+  padding: 24px;
+  min-height: 420px;
   overflow-y: auto;
+  overflow-x: auto;
+}
+
+/* Mencegah Gambar/Widget GitHub Stats Meluap di HP */
+.preview-box img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 #markdown-output {
@@ -410,7 +424,7 @@ textarea.form-control {
   visibility: hidden;
   transition: all 0.3s ease;
   z-index: 1000;
-  padding: 20px;
+  padding: 16px;
 }
 
 .modal-overlay.active {
@@ -426,7 +440,7 @@ textarea.form-control {
   max-width: 650px;
   max-height: 85vh;
   overflow-y: auto;
-  padding: 28px;
+  padding: 24px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
   transform: translateY(20px);
   transition: transform 0.3s ease;
@@ -446,7 +460,7 @@ textarea.form-control {
 }
 
 .modal-header h2 {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: var(--primary);
   display: flex;
   align-items: center;
@@ -469,11 +483,11 @@ textarea.form-control {
 /* Step Card Tutorial */
 .step-card {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   background: var(--bg-input);
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  padding: 16px;
+  padding: 14px;
   margin-bottom: 12px;
 }
 
@@ -510,4 +524,93 @@ textarea.form-control {
   border-radius: 4px;
   font-family: 'Fira Code', monospace;
   font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints untuk Mode HP & Tablet
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 8px;
+  }
+
+  .app-header {
+    padding: 16px 12px;
+    margin-bottom: 16px;
+  }
+
+  .app-header > div {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 14px !important;
+    text-align: center !important;
+  }
+
+  .app-header > div > div:first-child {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .app-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .app-container {
+    padding: 0 4px 20px;
+    gap: 16px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .preview-window-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .preview-window-header > div:first-child {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .action-btns {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .action-btns .btn-action {
+    flex: 1;
+  }
+
+  .preview-box {
+    padding: 14px;
+    min-height: 350px;
+  }
+
+  .modal-content {
+    padding: 16px;
+  }
+
+  .step-card {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #toast-notification {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    justify-content: center;
+  }
 }
