@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive GitHub README Generator</title>
+  
+  <!-- Favicon Logo Tab Browser -->
+  <link rel="icon" type="image/png" href="assets/images/icon.png">
+  
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header class="app-header">
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; width: 100%;">
+      <div style="text-align: left; display: flex; align-items: center; gap: 14px;">
+        <!-- Logo di Header Web -->
+        <img src="assets/images/icon.png" alt="Logo GitHub README Generator" style="width: 50px; height: 50px; object-fit: contain;">
+        <div>
+          <h1 style="font-size: 1.8rem; font-weight: 700; margin: 0;">⚡ GitHub README Generator</h1>
+          <p style="margin: 4px 0 0 0;">Rancang profil GitHub profesional & futuristik dalam hitungan detik.</p>
+        </div>
+      </div>  
+      <div style="display: flex; gap: 8px;">
+        <button id="btn-export-json" class="btn-action" style="background: #334155; color: white;">📥 Export Config</button>
+        <button id="btn-import-json" class="btn-action" style="background: #334155; color: white;">📤 Import Config</button>
+        <input type="file" id="file-import-input" accept=".json" style="display: none;">
+        <button id="btn-open-tutorial" class="btn-action btn-primary">❓ Cara Pasang</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <div class="app-container">
+    
+    <!-- SISI KIRI: Form Accordion Input -->
+    <section class="card">
+      
+      <!-- Accordion 0: Presets -->
+      <div class="accordion-item">
+        <div class="accordion-header">🚀 Preset Templates</div>
+        <div class="accordion-body">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button id="btn-preset-minimal" class="badge-btn">⚡ Minimalist</button>
+            <button id="btn-preset-fullstack" class="badge-btn">🔥 Full-Stack</button>
+            <button id="btn-preset-student" class="badge-btn">🎓 Student</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 1: Profil -->
+      <div class="accordion-item">
+        <div class="accordion-header">👤 Profil & Informasi Utama</div>
+        <div class="accordion-body">
+          <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" id="input-name" class="form-control" placeholder="Wandi Wijaya">
+          </div>
+          <div class="form-group">
+            <label>Role / Title</label>
+            <input type="text" id="input-title" class="form-control" placeholder="Full-Stack Developer">
+          </div>
+          <div class="form-group">
+            <label>Bio Singkat</label>
+            <textarea id="input-bio" class="form-control" placeholder="Suka membangun web apps..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Sedang Mengembangkan</label>
+            <input type="text" id="input-building" class="form-control" placeholder="Nama proyek/aplikasi...">
+          </div>
+          <div class="form-group">
+            <label>Sedang Mempelajari</label>
+            <input type="text" id="input-learning" class="form-control" placeholder="Teknologi baru...">
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 2: Project Showcase -->
+      <div class="accordion-item">
+        <div class="accordion-header">📌 Project Showcase</div>
+        <div class="accordion-body">
+          <div id="project-list" style="margin-bottom: 12px;"></div>
+          <div style="background: var(--bg-input); padding: 12px; border-radius: 8px; border: 1px dashed var(--border-color);">
+            <div class="form-group">
+              <input type="text" id="proj-name" class="form-control" placeholder="Nama Proyek (misal: LUMAcode AI)">
+            </div>
+            <div class="form-group">
+              <input type="text" id="proj-desc" class="form-control" placeholder="Deskripsi Singkat">
+            </div>
+            <div class="form-group">
+              <input type="text" id="proj-tech" class="form-control" placeholder="Tech Stack">
+            </div>
+            <div class="form-group">
+              <input type="text" id="proj-repo" class="form-control" placeholder="URL Repo GitHub">
+            </div>
+            <div class="form-group">
+              <input type="text" id="proj-demo" class="form-control" placeholder="URL Live Demo (Opsional)">
+            </div>
+            <button id="btn-add-project" class="btn-action btn-primary" style="width: 100%;">➕ Tambah Proyek</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 3: Tech Stack dengan Live Search Bar -->
+      <div class="accordion-item">
+        <div class="accordion-header">🛠️ Tech Stack Badges (100+)</div>
+        <div class="accordion-body">
+          <div class="form-group">
+            <input type="text" id="search-badge" class="form-control" placeholder="🔍 Cari badge (cth: docker, python, react, figma)...">
+          </div>
+          <div id="badge-container" class="badge-grid" style="max-height: 220px; overflow-y: auto; padding-right: 4px;">
+            <button class="badge-btn" data-slug="html5">HTML5</button>
+            <button class="badge-btn" data-slug="css3">CSS3</button>
+            <button class="badge-btn" data-slug="javascript">JavaScript</button>
+            <button class="badge-btn" data-slug="typescript">TypeScript</button>
+            <button class="badge-btn" data-slug="php">PHP</button>
+            <button class="badge-btn" data-slug="laravel">Laravel</button>
+            <button class="badge-btn" data-slug="vue.js">Vue.js</button>
+            <button class="badge-btn" data-slug="react">React</button>
+            <button class="badge-btn" data-slug="next.js">Next.js</button>
+            <button class="badge-btn" data-slug="tailwindcss">TailwindCSS</button>
+            <button class="badge-btn" data-slug="bootstrap">Bootstrap</button>
+            <button class="badge-btn" data-slug="python">Python</button>
+            <button class="badge-btn" data-slug="flutter">Flutter</button>
+            <button class="badge-btn" data-slug="dart">Dart</button>
+            <button class="badge-btn" data-slug="mysql">MySQL</button>
+            <button class="badge-btn" data-slug="postgresql">PostgreSQL</button>
+            <button class="badge-btn" data-slug="git">Git</button>
+            <button class="badge-btn" data-slug="github">GitHub</button>
+            <button class="badge-btn" data-slug="docker">Docker</button>
+            <button class="badge-btn" data-slug="figma">Figma</button>
+            <button class="badge-btn" data-slug="canva">Canva</button>
+            <button class="badge-btn" data-slug="capcut">CapCut</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 4: Stats, Snake, Spotify & Quotes Toggle -->
+      <div class="accordion-item">
+        <div class="accordion-header">📊 Stats, Widgets & Fun Cards</div>
+        <div class="accordion-body">
+          <div class="toggle-group">
+            <label for="toggle-stats">GitHub Stats Card</label>
+            <input type="checkbox" id="toggle-stats" class="toggle-switch" checked>
+          </div>
+          <div class="toggle-group">
+            <label for="toggle-streak">GitHub Streak Stats</label>
+            <input type="checkbox" id="toggle-streak" class="toggle-switch" checked>
+          </div>
+          <div class="toggle-group">
+            <label for="toggle-top-langs">Top Languages Card</label>
+            <input type="checkbox" id="toggle-top-langs" class="toggle-switch" checked>
+          </div>
+          <div class="toggle-group">
+            <label for="toggle-trophies">GitHub Trophies Widget</label>
+            <input type="checkbox" id="toggle-trophies" class="toggle-switch" checked>
+          </div>
+          <div class="toggle-group">
+            <label for="toggle-snake">🐍 Contribution Snake Animation</label>
+            <input type="checkbox" id="toggle-snake" class="toggle-switch">
+          </div>
+          <div class="toggle-group">
+            <label for="toggle-spotify">🎵 Spotify Currently Playing</label>
+            <input type="checkbox" id="toggle-spotify" class="toggle-switch">
+          </div>
+          <div class="toggle-group">
+            <label for="toggle-wakatime">⏱️ WakaTime Coding Activity</label>
+            <input type="checkbox" id="toggle-wakatime" class="toggle-switch">
+          </div>
+          <div class="toggle-group">
+            <label for="toggle-quotes">💬 Daily Dev Quotes</label>
+            <input type="checkbox" id="toggle-quotes" class="toggle-switch">
+          </div>
+          <div class="toggle-group">
+            <label for="toggle-jokes">🤣 Daily Dev Jokes</label>
+            <input type="checkbox" id="toggle-jokes" class="toggle-switch">
+          </div>
+
+          <div class="form-group" style="margin-top: 14px;">
+            <label>Tema Warna Widget</label>
+            <select id="select-theme" class="form-control">
+              <option value="tokyo-night">Tokyo Night</option>
+              <option value="dracula">Dracula</option>
+              <option value="catppuccin">Catppuccin</option>
+              <option value="one-dark">One Dark</option>
+              <option value="github-dark">GitHub Dark</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 5: Social Links -->
+      <div class="accordion-item">
+        <div class="accordion-header">📫 Social Media Links</div>
+        <div class="accordion-body">
+          <div class="form-group">
+            <input type="text" id="social-github" class="form-control" placeholder="Username GitHub (cth: Luxy-cripto)">
+          </div>
+          <div class="form-group">
+            <input type="text" id="social-linkedin" class="form-control" placeholder="URL LinkedIn">
+          </div>
+          <div class="form-group">
+            <input type="text" id="social-instagram" class="form-control" placeholder="URL Instagram">
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 6: Donation -->
+      <div class="accordion-item">
+        <div class="accordion-header">☕ Buy Me a Coffee / Donasi</div>
+        <div class="accordion-body">
+          <div class="form-group">
+            <input type="text" id="donation-bmc" class="form-control" placeholder="Username BuyMeACoffee">
+          </div>
+          <div class="form-group">
+            <input type="text" id="donation-kofi" class="form-control" placeholder="Username Ko-fi">
+          </div>
+          <div class="form-group">
+            <input type="text" id="donation-saweria" class="form-control" placeholder="Username Saweria">
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 7: Custom Section -->
+      <div class="accordion-item">
+        <div class="accordion-header">📝 Custom Section (Bebas)</div>
+        <div class="accordion-body">
+          <div id="custom-section-list" style="margin-bottom: 12px;"></div>
+          <div style="background: var(--bg-input); padding: 12px; border-radius: 8px; border: 1px dashed var(--border-color);">
+            <div class="form-group">
+              <input type="text" id="custom-title" class="form-control" placeholder="Judul (misal: ⚡ Fun Facts)">
+            </div>
+            <div class="form-group">
+              <textarea id="custom-content" class="form-control" placeholder="Isi teks/Markdown..."></textarea>
+            </div>
+            <button id="btn-add-custom-section" class="btn-action btn-primary" style="width: 100%;">➕ Tambah Section</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion 8: Direct GitHub API -->
+      <div class="accordion-item">
+        <div class="accordion-header">🔗 Direct Commit ke GitHub</div>
+        <div class="accordion-body">
+          <div class="form-group">
+            <label>GitHub Personal Access Token (PAT)</label>
+            <input type="password" id="github-token" class="form-control" placeholder="ghp_xxxxxxxxxxxxxxxxx">
+          </div>
+          <div class="form-group">
+            <label>Target Repository Name</label>
+            <input type="text" id="github-repo" class="form-control" placeholder="Nama Repo (cth: Luxy-cripto)">
+          </div>
+          <button id="btn-direct-commit" class="btn-action btn-primary" style="width: 100%; justify-content: center;">
+            🚀 Push / Commit Langsung ke GitHub
+          </button>
+        </div>
+      </div>
+
+      <!-- Accordion 9: Reorder Section -->
+      <div class="accordion-item">
+        <div class="accordion-header">↕️ Urutan Blok README</div>
+        <div class="accordion-body" id="section-order-list"></div>
+      </div>
+
+    </section>
+
+    <!-- SISI KANAN: Preview macOS Window -->
+    <section class="card" style="display: flex; flex-direction: column;">
+      
+      <div class="preview-window-header">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="window-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <div class="tab-group">
+            <button id="tab-visual" class="tab-btn active">👁️ Visual Preview</button>
+            <button id="tab-raw" class="tab-btn">📝 Raw Code</button>
+          </div>
+        </div>
+
+        <div class="action-btns">
+          <button id="btn-copy" class="btn-action btn-primary">📋 Copy Kode</button>
+          <button id="btn-download" class="btn-action btn-success">💾 Download .md</button>
+        </div>
+      </div>
+
+      <div id="visual-preview" class="preview-box"></div>
+      <pre id="markdown-output" class="preview-box"></pre>
+
+    </section>
+
+  </div>
+
+  <!-- Modal Tutorial Popup -->
+  <div id="modal-tutorial" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>📖 Cara Memasang README ke Profil GitHub</h2>
+        <button id="btn-close-tutorial" class="modal-close">&times;</button>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-body">
+          <h4>Buat Repository Khusus di GitHub</h4>
+          <p>Buka <a href="https://github.com/new" target="_blank" style="color:var(--primary);">github.com/new</a>. Isi nama repository <strong>SAMA PERSIS</strong> dengan Username GitHub kamu.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-body">
+          <h4>Atur Akses ke Public & Tambah README</h4>
+          <p>Pastikan opsi ditandai sebagai <strong>Public</strong>, lalu beri centang pada <strong>Add a README file</strong>.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-body">
+          <h4>Copy Kode dari Generator Ini</h4>
+          <p>Gunakan tombol <strong>📋 Copy Kode</strong> atau <strong>💾 Download .md</strong> yang ada di generator ini.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <div class="step-body">
+          <h4>Edit & Paste di GitHub Editor</h4>
+          <p>Buka repo kamu (<code>github.com/username/username</code>), klik Edit README.md, lalu paste kodenya.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">5</div>
+        <div class="step-body">
+          <h4>Commit Changes</h4>
+          <p>Klik tombol hijau <strong>Commit changes...</strong> di pojok kanan atas.</p>
+        </div>
+      </div>
+
+      <button id="btn-understood" class="btn-action btn-primary" style="width: 100%; margin-top: 12px; justify-content: center;">
+        Siap, Saya Paham! 👍
+      </button>
+    </div>
+  </div>
+
+  <div id="toast-notification">
+    <span id="toast-text">Notification</span>
+  </div>
+
+  <script type="module" src="src/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+# Operating System Files (Mac & Windows)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor / IDE Settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Local Environment & Secret Files
+.env
+.env.local
+.env.*.local
+*.log
+
+# Dependencies & Build Folders (jika suatu saat menggunakan npm/bundler)
+node_modules/
+dist/
+build/
